@@ -83,13 +83,13 @@ global class TEST_MemberService implements TESTMRF.MemberCreation{
         Map<Id, Account> mapAccountsEligible = new Map<Id, Account>();        
 
         if (setAccountIds == null){
-            accountMessage.put(null, ERROR_PREFIX + Label.TEST_AccountNoIds);
+            accountMessage.put(null, error_prefix + Label.test_accountnoids);
             // Please enter valid Contact Ids.
             return accountMessage;
         }
 
         if (setAccountIds.size() > MEMBER_CREATION_LIMIT){
-            accountMessage.put(null, ERROR_PREFIX + Label.TEST_AccountIdsLimit);
+            accountMessage.put(null, error_prefix + Label.TEST_AccountIdsLimit);
             return accountMessage;
         }
 
@@ -99,7 +99,7 @@ global class TEST_MemberService implements TESTMRF.MemberCreation{
                 if (acc.TEST_EligibleForLoyalty__c){
                     if (acc.RecordType.DeveloperName == 'Touchpoint'){
                         if (acc.DTE_Market__r.DTE_RelatedCountries__c == null){
-                            accountMessage.put(acc.Id, ERROR_PREFIX + Label.TEST_AccountMarketCountryError);
+                            accountMessage.put(acc.Id, error_prefix + Label.TEST_AccountMarketCountryError);
                             // Account Market related country is empty.
                         }
                         else{
@@ -107,17 +107,17 @@ global class TEST_MemberService implements TESTMRF.MemberCreation{
                         }
                     }
                     else{
-                        accountMessage.put(acc.Id, ERROR_PREFIX +  Label.TEST_AccountMustBeTouchpoint);
+                        accountMessage.put(acc.Id, error_prefix +  Label.TEST_AccountMustBeTouchpoint);
                         // Account member creation method is only available for Touchpoints.
                     }      
                 }
                 else{
-                    accountMessage.put(acc.Id, ERROR_PREFIX +  Label.TEST_AccountNotAvailableForLoyalty);
+                    accountMessage.put(acc.Id, error_prefix +  Label.TEST_AccountNotAvailableForLoyalty);
                     // Account is not eligible for loyalty.                    
                 }                        
             }
             else{
-                accountMessage.put(acc.Id, ERROR_PREFIX +  Label.TEST_AccountAlreadyHasAMember);
+                accountMessage.put(acc.Id, error_prefix +  Label.TEST_AccountAlreadyHasAMember);
                 // Account already has a member.
             }
         }  
@@ -154,7 +154,7 @@ global class TEST_MemberService implements TESTMRF.MemberCreation{
                     }
                     // On a Member insertion failure, we get the error message from the DML result and return it with the related Account
                     else {
-                        accountMessage.put(accountId, ERROR_PREFIX +  sr.getErrors()[0].getMessage());
+                        accountMessage.put(accountId, error_prefix +  sr.getErrors()[0].getMessage());
                         mapAccountsEligible.remove(accountId);
                     }
                 }
@@ -182,7 +182,7 @@ global class TEST_MemberService implements TESTMRF.MemberCreation{
         Set<Id> setContactsCommunityActivator = new Set<Id>();
 
         if (setContactIds == null){
-            contactMessage.put(null, ERROR_PREFIX + Label.TEST_ContactNoIds);
+            contactMessage.put(null, error_prefix + Label.TEST_ContactNoIds);
             // Please enter valid Contact Ids.
             return contactMessage;
         }
